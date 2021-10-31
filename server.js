@@ -10,7 +10,7 @@ app.use(express.json())  //Looks for request body and turns it into req.body
 app.use(morgan("dev"))   //Logs requests to the console
 
 //Connect to database
-mongoose.connect("mongodb://localhost:27017/inventorydb",
+mongoose.connect("mongodb://localhost:27017/inventoriesdb",
     {
         useNewUrlParser: true,
         useUnifiedTopology: true,
@@ -22,10 +22,7 @@ mongoose.connect("mongodb://localhost:27017/inventorydb",
 
 
 //Routes
-
-
-
-
+app.use("/inventories", require("./routes/inventoryRouter.js"))
 
 
 

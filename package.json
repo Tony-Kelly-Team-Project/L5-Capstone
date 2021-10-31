@@ -20,7 +20,7 @@
   "homepage": "https://github.com/Tony-Kelly-Team-Project/L5-Capstone#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "mongoose": "^5.13.8",
+    "mongoose": "^5.13.12",
     "morgan": "^1.10.0"
   }
 }
