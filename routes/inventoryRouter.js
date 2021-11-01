@@ -5,7 +5,7 @@ const Inventory = require("../models/inventory.js")
 //GET Request - ALL
 inventoryRouter.get("/", (req, res, next) => {
     Inventory.find((err, inventories) => {
-        if(err){
+        if (err) {
             response.status(500)
             return next(err)
         }
@@ -18,9 +18,9 @@ inventoryRouter.get("/:inventoryID", (req, res, next) => {
     Inventory.find(
         { _id: req.params.inventoryID },
         (err, updatedItem) => {
-            if(err){
+            if (err) {
                 res.status(500)
-                return next (err)
+                return next(err)
             }
             return res.status(200).send(updatedItem)
         })
@@ -32,7 +32,7 @@ inventoryRouter.post("/", (req, res, next) => {
     req.body.inventory = req.params.inventoryID
     const newInventory = new Inventory(req.body)
     newInventory.save((err, savedInventory) => {
-        if(err){
+        if (err) {
             res.status(500)
             return next(err)
         }
@@ -40,12 +40,79 @@ inventoryRouter.post("/", (req, res, next) => {
     })
 })
 
+
 //PUT Request - EDIT/UPDATE ONE
+inventoryRouter.put("/:inventoryID", (req, res, next) => {
+    Inventory.findOneAndUpdate(
+        { _id: req.params.inventoryID },
+        req.body,
+        { new: true },
+        (err, updatedInventory) => {
+            if (err) {
+                res.status(500)
+                return next(err)
+            }
+            return res.status(201).send(updatedInventory)
+        }
+    )
+})
 
 
 //DELETE Request - ONE
+inventoryRouter.delete("/:inventoryID", (req, res, next) => {
+    Inventory.findOneAndDelete(
+        { _id: req.params.inventoryID },
+        (err, deletedInventory) => {
+            if (err) {
+                res.status(500)
+                return next(err)
+            }
+            return res.status(200).send(`Successfully deleted inventory item ${deletedInventory.title} with SKU ${deletedInventory.SKU}`)
+        })
+})
+
+//GET INVENTORY BY SEARCH TITLE TERM (use mongoDB method $regex)
+// "i" means case insensitive
+inventoryRouter.get("/search", (req, res, next) => {
+    const { title } = req.query
+    const pattern = new RegExp(title)
+    Inventory.find({ title: { $regex: pattern, $options: "i" } },
+        (err, titles) => {
+            if (err) {
+                res.status(500)
+                return next(err)
+            }
+            return res.status(200).send(titles)
+        })
+})
+
+//FILTER BY CATEGORY
+//$filter
+//$and
+//$or
+//NOTE:  When have both above & below code:  it's returning ALL items, instead of filtered
+//NOTE:  HOWEVER, if I comment out the code above, then the below code works; does it need to be combined with above???  HOW COMBINE??
+
+inventoryRouter.get("/search", (req, res, next) => {
+    const { category } = req.query
+    const pattern = new RegExp(category)
+    Inventory.find({ category: { $regex: pattern, $options: "i" } },
+        (err, categories) => {
+            if (err) {
+                res.status(500)
+                return next(err)
+            }
+            return res.status(200).send(categories)
+        })
+})
 
 
-//SEARCH BY TITLE Request
+//SORT BY CATEGORY
+//.find().sort()
+//$match(), $group(), $sort()
+//QUESTION:  where is best place for SORTING?  --Here in router/mongoDB, or better in React??
+
+
+
 
 module.exports = inventoryRouter
