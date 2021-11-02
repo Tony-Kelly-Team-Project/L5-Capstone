@@ -106,11 +106,28 @@ inventoryRouter.get("/search", (req, res, next) => {
         })
 })
 
+//possibly add filter that you can give range of inventory quantities (min/max) & also sort high/low low/high -- youtube vid???
+
 
 //SORT BY CATEGORY
 //.find().sort()
 //$match(), $group(), $sort()
 //QUESTION:  where is best place for SORTING?  --Here in router/mongoDB, or better in React??
+
+//DO NOT think this code is correct below -- how write it & how test?
+// inventoryRouter.get("/", (req, res, next) => {
+//     Inventory.find().sort(
+//         { category: 1 }
+//     ),
+//         (err, categories) => {
+//             if (err) {
+//                 res.status(500)
+//                 return next(err)
+//             }
+//             return res.status(200).send(categories)
+//         }
+// })
+
 
 
 
