@@ -70,7 +70,7 @@ inventoryRouter.put("/:inventoryID", (req, res, next) => {
 })
 
 
-//DELETE Request - ONE
+// DELETE Request - ONE
 inventoryRouter.delete("/:inventoryID", (req, res, next) => {
     Inventory.findOneAndDelete(
         { _id: req.params.inventoryID },
@@ -82,6 +82,7 @@ inventoryRouter.delete("/:inventoryID", (req, res, next) => {
             return res.status(200).send(`Successfully deleted inventory item ${deletedInventory.title} with SKU ${deletedInventory.SKU}`)
         })
 })
+
 
 //GET INVENTORY BY SEARCH TITLE TERM (use mongoDB method $regex)
 // "i" means case insensitive
@@ -143,7 +144,7 @@ inventoryRouter.get("/search", (req, res, next) => {
 
 
 //DELETE Request - Delete all inventory tiems whose quantity equals "0"
-inventoryRouter.delete("/deletezero", (req, res, next) => {
+inventoryRouter.delete("/delete/zero", (req, res, next) => {
     Inventory.deleteMany(
         { quantity: 0 },
         (err, deletedZeroStock) => {
@@ -151,11 +152,10 @@ inventoryRouter.delete("/deletezero", (req, res, next) => {
                 res.status(500)
                 return next(err)
             }
-            // return res.status(200).send(`Sucessfully deleted all items with zero quantity from the database`)
+            // return res.status(200).send(deletedZeroStock)
             return res.status(200).send(`You have deleted ${deletedZeroStock.deletedCount} zero stock items from the database`)
         })
 })
-
 
 
 
