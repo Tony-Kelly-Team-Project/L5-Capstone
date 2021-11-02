@@ -83,6 +83,7 @@ inventoryRouter.delete("/:inventoryID", (req, res, next) => {
         })
 })
 
+
 //GET INVENTORY BY SEARCH TITLE TERM (use mongoDB method $regex)
 // "i" means case insensitive
 inventoryRouter.get("/search", (req, res, next) => {
@@ -134,7 +135,7 @@ inventoryRouter.delete("/deletezero", (req, res, next) => {
                 res.status(500)
                 return next(err)
             }
-            // return res.status(200).send(`Sucessfully deleted all items with zero quantity from the database`)
+            // return res.status(200).send(deletedZeroStock)
             return res.status(200).send(`You have deleted ${deletedZeroStock.deletedCount} zero stock items from the database`)
         })
 })
