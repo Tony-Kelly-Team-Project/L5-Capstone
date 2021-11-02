@@ -70,7 +70,7 @@ inventoryRouter.put("/:inventoryID", (req, res, next) => {
 })
 
 
-//DELETE Request - ONE
+// DELETE Request - ONE
 inventoryRouter.delete("/:inventoryID", (req, res, next) => {
     Inventory.findOneAndDelete(
         { _id: req.params.inventoryID },
@@ -144,7 +144,7 @@ inventoryRouter.get("/search", (req, res, next) => {
 
 
 //DELETE Request - Delete all inventory tiems whose quantity equals "0"
-inventoryRouter.delete("/deletezero", (req, res, next) => {
+inventoryRouter.delete("/delete/zero", (req, res, next) => {
     Inventory.deleteMany(
         { quantity: 0 },
         (err, deletedZeroStock) => {
@@ -156,7 +156,6 @@ inventoryRouter.delete("/deletezero", (req, res, next) => {
             return res.status(200).send(`You have deleted ${deletedZeroStock.deletedCount} zero stock items from the database`)
         })
 })
-
 
 
 
