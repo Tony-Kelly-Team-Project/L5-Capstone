@@ -26,6 +26,7 @@ inventoryRouter.get("/:inventoryID", (req, res, next) => {
         })
 })
 
+
 //GET Request - Find inventory items that equal "0"
 inventoryRouter.get("/search/zeroquantity", (req, res, next) => {
     Inventory.where("quantity").lte(0).exec((err, zeroStock) => {
@@ -70,7 +71,7 @@ inventoryRouter.put("/:inventoryID", (req, res, next) => {
 })
 
 
-//DELETE Request - ONE
+// DELETE Request - ONE
 inventoryRouter.delete("/:inventoryID", (req, res, next) => {
     Inventory.findOneAndDelete(
         { _id: req.params.inventoryID },
@@ -82,6 +83,7 @@ inventoryRouter.delete("/:inventoryID", (req, res, next) => {
             return res.status(200).send(`Successfully deleted inventory item ${deletedInventory.title} with SKU ${deletedInventory.SKU}`)
         })
 })
+
 
 //GET INVENTORY BY SEARCH TITLE TERM (use mongoDB method $regex)
 //ALSO == look at createIndex + $text =>  supposedly faster processing speed (vs. using $regex) when using indexing
@@ -205,6 +207,47 @@ inventoryRouter.get("/total/valueByCategory", (req, res, next) => {
     )
 })
 
+//DELETE Request - Delete all inventory tiems whose quantity equals "0"
+inventoryRouter.delete("/delete/zero", (req, res, next) => {
+    Inventory.deleteMany(
+        { quantity: 0 },
+        (err, deletedZeroStock) => {
+            if(err){
+                res.status(500)
+                return next(err)
+            }
+            // return res.status(200).send(deletedZeroStock)
+            return res.status(200).send(`You have deleted ${deletedZeroStock.deletedCount} zero stock items from the database`)
+        })
+})
 
+// GET Request - Total number of items in the inventory 
+inventoryRouter.get("/total/number", (req, res, next) => {
+    Inventory.countDocuments({}, // counts the number of documents in the db
+        (err, totalNumberItems) => {
+            if(err){
+                res.status(500)
+                return next(err)
+            }
+            return res.status(200).send(`Total number of items in the inventory = ${totalNumberItems}`)
+        }
+    )
+})
+
+// GET Request - Total value of the inventory using aggregate()
+inventoryRouter.get("/total/value", (req, res, next) => {
+    Inventory.aggregate([
+        {$match: {} },  // matches all the items in the db
+        {$group: {_id: "totalID", totalprice: {$sum: "$price"}} } // gives a sum of the total value of the prices
+    ],
+        (err, priceTotal) => {
+            if(err){
+                res.status(500)
+                return next(err)
+            }
+            return res.status(200).send(priceTotal)
+        }
+    )
+})
 
 module.exports = inventoryRouter

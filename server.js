@@ -20,7 +20,6 @@ mongoose.connect("mongodb://localhost:27017/inventoriesdb",
     () => console.log("Connected to the DB!")
 )
 
-
 //Routes
 app.use("/inventories", require("./routes/inventoryRouter.js"))
 
