@@ -26,10 +26,10 @@ inventoryRouter.get("/:inventoryID", (req, res, next) => {
         })
 })
 
-//GET Request - Find iventory items that equal "0"
+//GET Request - Find inventory items that equal "0"
 inventoryRouter.get("/search/zeroquantity", (req, res, next) => {
-    Inventory.where("quantity").lte(0).exec((err, zeroStock) =>{
-        if(err){
+    Inventory.where("quantity").lte(0).exec((err, zeroStock) => {
+        if (err) {
             res.status(500)
             return next(err)
         }
@@ -84,8 +84,9 @@ inventoryRouter.delete("/:inventoryID", (req, res, next) => {
 })
 
 //GET INVENTORY BY SEARCH TITLE TERM (use mongoDB method $regex)
+//ALSO == look at createIndex + $text =>  supposedly faster processing speed (vs. using $regex) when using indexing
 // "i" means case insensitive
-inventoryRouter.get("/search", (req, res, next) => {
+inventoryRouter.get("/search/title", (req, res, next) => {
     const { title } = req.query
     const pattern = new RegExp(title)
     Inventory.find({ title: { $regex: pattern, $options: "i" } },
@@ -98,14 +99,16 @@ inventoryRouter.get("/search", (req, res, next) => {
         })
 })
 
-//FILTER BY CATEGORY
+
+//FILTER/SEARCH BY CATEGORY
+//ALSO == look at createIndex + $text =>  supposedly faster processing speed (vs. using $regex) when using indexing
 //$filter
 //$and
 //$or
-//NOTE:  When have both above & below code:  it's returning ALL items, instead of filtered
-//NOTE:  HOWEVER, if I comment out the code above, then the below code works; does it need to be combined with above???  HOW COMBINE??
+//$elemMatch
+//.aggregate() + $match  [aggregate -- also maybe helpful for reports/summaries]
 
-inventoryRouter.get("/search", (req, res, next) => {
+inventoryRouter.get("/search/category", (req, res, next) => {
     const { category } = req.query
     const pattern = new RegExp(category)
     Inventory.find({ category: { $regex: pattern, $options: "i" } },
@@ -118,36 +121,64 @@ inventoryRouter.get("/search", (req, res, next) => {
         })
 })
 
-//possibly add filter that you can give range of inventory quantities (min/max) & also sort high/low low/high -- youtube vid???
 
-
-//SORT BY CATEGORY
-//.find().sort()
-//$match(), $group(), $sort()
-//QUESTION:  where is best place for SORTING?  --Here in router/mongoDB, or better in React??
-
-//DO NOT think this code is correct below -- how write it & how test?
-// inventoryRouter.get("/", (req, res, next) => {
-//     Inventory.find().sort(
-//         { category: 1 }
-//     ),
+//ATTEMPT AT COMBINING SEARCH BY TITLE, SEARCH BY CATEGORY -- but not working right now
+// inventoryRouter.get("/search", (req, res, next) => {
+//     const { userTyped } = req.query
+//     const pattern = new RegExp(userTyped)
+//     Inventory.find({
+//         $or: [
+//             { category: { $regex: pattern, $options: "i" } },
+//             { title: { $regex: pattern, $options: "i" } }
+//         ]
+//     },
 //         (err, categories) => {
 //             if (err) {
 //                 res.status(500)
 //                 return next(err)
 //             }
 //             return res.status(200).send(categories)
+//         })
+// })
+
+//SORT BY CATEGORY -- using find & sort -- but doesn't seem to work??
+// inventoryRouter.get("/list/sorted", (req, res, next) => {
+//     Inventory.find().sort({ "category": 1, "_id": 1 }),
+//         (err, sortedItems) => {
+//             if (err) {
+//                 res.status(500)
+//                 return next(err)
+//             }
+//             // return res.status(200).send(`Sucessfully deleted all items with zero quantity from the database`)
+//             return res.status(200).send(sortedItems)
 //         }
 // })
 
 
+//SORT ALL INVENTORY BY CATEGORY & ID ASCENDING ORDER ON BOTH -- USING AGGREGATION
+inventoryRouter.get("/list/sorted", (req, res, next) => {
+    Inventory.aggregate([
+        { $sort: { category: 1, _id: 1 } }
+    ],
 
-//DELETE Request - Delete all inventory tiems whose quantity equals "0"
+        (err, sortedInventory) => {
+            if (err) {
+                res.status(500)
+                return next(err)
+            }
+            return res.status(200).send(sortedInventory)
+        }
+
+    )
+})
+
+
+//DELETE Request - Delete all inventory items whose quantity equals "0"
 inventoryRouter.delete("/deletezero", (req, res, next) => {
     Inventory.deleteMany(
         { quantity: 0 },
         (err, deletedZeroStock) => {
-            if(err){
+            if (err) {
                 res.status(500)
                 return next(err)
             }
@@ -156,6 +187,23 @@ inventoryRouter.delete("/deletezero", (req, res, next) => {
         })
 })
 
+
+
+//RETURNS AGGREGATED TOTAL VALUE BY CATEGORY:
+inventoryRouter.get("/total/valueByCategory", (req, res, next) => {
+    Inventory.aggregate([
+        { $match: {} },
+        { $group: { _id: "$category", totalprice: { $sum: "$price" } } }
+    ],
+        (err, priceTotal) => {
+            if (err) {
+                res.status(500)
+                return next(err)
+            }
+            return res.status(200).send(priceTotal)
+        }
+    )
+})
 
 
 
