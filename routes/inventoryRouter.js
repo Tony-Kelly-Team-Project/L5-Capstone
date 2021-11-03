@@ -125,7 +125,8 @@ inventoryRouter.get("/search", (req, res, next) => {
 //SORT BY CATEGORY
 //.find().sort()
 //$match(), $group(), $sort()
-//QUESTION:  where is best place for SORTING?  --Here in router/mongoDB, or better in React??
+//QUESTION:  where is best place for SORTING?  --Here in router/mongoDB, or better in React?
+
 
 //DO NOT think this code is correct below -- how write it & how test?
 // inventoryRouter.get("/", (req, res, next) => {
@@ -157,6 +158,33 @@ inventoryRouter.delete("/delete/zero", (req, res, next) => {
         })
 })
 
+// GET Request - Total number of items in the inventory 
+inventoryRouter.get("/total/number", (req, res, next) => {
+    Inventory.countDocuments({}, // counts the number of documents in the db
+        (err, totalNumberItems) => {
+            if(err){
+                res.status(500)
+                return next(err)
+            }
+            return res.status(200).send(`Total number of items in the inventory = ${totalNumberItems}`)
+        }
+    )
+})
 
+// GET Request - Total value of the inventory using aggregate()
+inventoryRouter.get("/total/value", (req, res, next) => {
+    Inventory.aggregate([
+        {$match: {} },  // matches all the items in the db
+        {$group: {_id: "totalID", totalprice: {$sum: "$price"}} } // gives a sum of the total value of the prices
+    ],
+        (err, priceTotal) => {
+            if(err){
+                res.status(500)
+                return next(err)
+            }
+            return res.status(200).send(priceTotal)
+        }
+    )
+})
 
 module.exports = inventoryRouter
