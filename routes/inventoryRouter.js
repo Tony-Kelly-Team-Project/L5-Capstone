@@ -124,6 +124,9 @@ inventoryRouter.get("/search/category", (req, res, next) => {
 })
 
 
+
+
+
 //ATTEMPT AT COMBINING SEARCH BY TITLE, SEARCH BY CATEGORY -- but not working right now
 // inventoryRouter.get("/search", (req, res, next) => {
 //     const { userTyped } = req.query
@@ -212,7 +215,7 @@ inventoryRouter.delete("/delete/zero", (req, res, next) => {
     Inventory.deleteMany(
         { quantity: 0 },
         (err, deletedZeroStock) => {
-            if(err){
+            if (err) {
                 res.status(500)
                 return next(err)
             }
@@ -225,7 +228,7 @@ inventoryRouter.delete("/delete/zero", (req, res, next) => {
 inventoryRouter.get("/total/number", (req, res, next) => {
     Inventory.countDocuments({}, // counts the number of documents in the db
         (err, totalNumberItems) => {
-            if(err){
+            if (err) {
                 res.status(500)
                 return next(err)
             }
@@ -237,11 +240,11 @@ inventoryRouter.get("/total/number", (req, res, next) => {
 // GET Request - Total value of the inventory using aggregate()
 inventoryRouter.get("/total/value", (req, res, next) => {
     Inventory.aggregate([
-        {$match: {} },  // matches all the items in the db
-        {$group: {_id: "totalID", totalprice: {$sum: "$price"}} } // gives a sum of the total value of the prices
+        { $match: {} },  // matches all the items in the db
+        { $group: { _id: "totalID", totalprice: { $sum: "$price" } } } // gives a sum of the total value of the prices
     ],
         (err, priceTotal) => {
-            if(err){
+            if (err) {
                 res.status(500)
                 return next(err)
             }
