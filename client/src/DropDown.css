@@ -1,0 +1,14 @@
+h5 {
+    margin-top: 30px;
+    margin-bottom: 2px;
+}
+
+.dropdown-menu {
+    margin-right: 15px;
+    font-family: Arial;
+    padding-top: 2px;
+}
+
+select {
+    width: 200px;
+}

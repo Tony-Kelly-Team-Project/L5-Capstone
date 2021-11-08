@@ -25,6 +25,6 @@ app.use("/inventories", require("./routes/inventoryRouter.js"))
 
 
 
-app.listen(9000, () => {
-    console.log("The server is running on PORT 9000!")
+app.listen(8000, () => {
+    console.log("The server is running on PORT 8000!")
 })
