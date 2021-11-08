@@ -110,20 +110,31 @@ inventoryRouter.get("/search/title", (req, res, next) => {
 //$elemMatch
 //.aggregate() + $match  [aggregate -- also maybe helpful for reports/summaries]
 
+// inventoryRouter.get("/search/category", (req, res, next) => {
+//     const { category } = req.query
+//     const pattern = new RegExp(category)
+//     Inventory.find({ category: { $regex: pattern, $options: "i" } },
+//         (err, categories) => {
+//             if (err) {
+//                 res.status(500)
+//                 return next(err)
+//             }
+//             return res.status(200).send(categories)
+//         })
+// })
+
+//DIFFERENT WAY TO GET BY CATEGORY
 inventoryRouter.get("/search/category", (req, res, next) => {
-    const { category } = req.query
-    const pattern = new RegExp(category)
-    Inventory.find({ category: { $regex: pattern, $options: "i" } },
-        (err, categories) => {
+    Inventory.find({ category: req.query.category }),                      //Does not like this line for some reason
+        (err, category) => {
             if (err) {
                 res.status(500)
                 return next(err)
             }
-            return res.status(200).send(categories)
-        })
+            return res.status(200).send(category)
+
+        }
 })
-
-
 
 
 
@@ -232,7 +243,7 @@ inventoryRouter.get("/total/number", (req, res, next) => {
                 res.status(500)
                 return next(err)
             }
-            return res.status(200).send(`Total number of items in the inventory = ${totalNumberItems}`)
+            return res.status(200).send(totalNumberItems)
         }
     )
 })

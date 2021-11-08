@@ -24,7 +24,7 @@ const inventorySchema = new Schema({
         type: String,
         required: true
     },
-    SKU: {
+    sku: {
         type: String,
         required: true
     },
