@@ -6,6 +6,8 @@ import "./SearchBar.css"
 //need button to submit search???
 
 function SearchBar(props) {
+    console.log("searchbar props.titleSearch", props.titleSearch)
+
     return (
         <div>
             <div className="title-searchbar">
@@ -18,7 +20,7 @@ function SearchBar(props) {
                 <button className="search-title-btn" onClick={props.titleSearch}>Submit Search</button>
             </div>
 
-            {/* <div className="category-searchbar">
+            <div className="category-searchbar">
                 <input
                     type="search"
                     className="search-bar-category"
@@ -26,7 +28,7 @@ function SearchBar(props) {
                     onChange={props.handleChangeCategory}
                 />
                 <button className="search-category-btn" onClick={props.categorySearch}>Submit Search</button>
-            </div> */}
+            </div>
         </div>
     );
 }

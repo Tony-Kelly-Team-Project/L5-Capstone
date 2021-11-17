@@ -19,6 +19,7 @@ th {
 
 th, td {
     text-align: left;
+    font-size: 14px;
 }
 
 .options-bar {
@@ -36,3 +37,4 @@ button {
     background-color: lightskyblue;
     font-weight: bold;
 }
+
