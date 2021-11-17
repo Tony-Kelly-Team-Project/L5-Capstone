@@ -2,6 +2,9 @@ const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
 
+//How enforce dollars/cents format for price???
+
+
 //Inventory Blueprint
 const inventorySchema = new Schema({
     title: {

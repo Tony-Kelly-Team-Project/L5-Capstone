@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
+// import React from "react"    // change after merge - had to comment this line and uncomment line above
 import { Switch, Route } from "react-router-dom"
-import axios from "axios"
 import Home from "./Home"
 import SnapShot from "./SnapShot"
 import Inventory from "./Inventory.js"
@@ -8,6 +8,7 @@ import InventoryForm from "./InventoryForm.js"
 import Reports from "./Reports"
 import NavBar from "./NavBar"
 import "./index.css"
+import axios from 'axios' //change after merge I had pull in axios
 
 export default function App(props) {
 
@@ -119,6 +120,8 @@ export default function App(props) {
             />
           )
           }
+          <Reports />
+
         </Route>
         
       </Switch>
