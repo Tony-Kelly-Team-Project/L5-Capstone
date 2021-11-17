@@ -1,3 +1,38 @@
-a {
+/* a {
     margin: 15px;
+} */
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #90CCF4;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border-top: 2.5px solid #5DA2D5;
+    border-bottom: 2.5px solid #5DA2D5;
+    
 }
+
+  li {
+    float: left;
+
+  }
+  
+  li a {
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 10px 12px;
+    text-decoration: none;
+  }
+  
+  /* Change the link color to #111 (black) on hover */
+  li a:hover {
+    background-color: #ECECEC;
+  }
+
+
+  * {
+   margin:0;   
+  }
