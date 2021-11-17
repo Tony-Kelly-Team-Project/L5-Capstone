@@ -14,26 +14,23 @@ function Reports() {
     //useState
     const [inventories, setInventories] = useState([])
     const [searchTitleTerm, setSearchTitleTerm] = useState("")
-    // const [searchCategoryTerm, setSearchCategoryTerm] = useState("")
+    const [searchCategoryTerm, setSearchCategoryTerm] = useState("")
 
 
     //GET ALL
     const getInventories = () => {
-        axios.get(`/inventories`)
+        axios.get(`/inventories/list/sorted`)
             .then(res => setInventories(res.data))
             .catch(err => console.log(err))
     }
 
-    //useEffect
     useEffect(() => {
         console.log("useEffect triggered")
         getInventories()
     }, [])
 
     //Titles SEARCH BAR
-    //NOTE:  console.log has correct search result & displays results; NOW -- need to figure out how to reset if not searching (if that's what want)
     //Q:  what should be starting point on Reports Page -- blank or all listings??
-
     const titleSearch = () => {
         console.log("searchTitleTerm:", searchTitleTerm)
 
@@ -43,14 +40,14 @@ function Reports() {
 
     }
 
-    // const categorySearch = () => {
-    //     console.log("searchCategoryTerm:", searchCategoryTerm)
+    const categorySearch = () => {
+        console.log("searchCategoryTerm:", searchCategoryTerm)
 
-    //     axios.get(`inventories/search/category?category=${searchCategoryTerm}`)
-    //         .then(res => console.log(res.data))
-    //         .catch(err => console.log(err))
+        axios.get(`inventories/search/category?category=${searchCategoryTerm}`)
+            .then(res => setInventories(res.data))
+            .catch(err => console.log(err))
 
-    // }
+    }
 
     //handleChange for Title Search Bar
     const handleChangeTitle = (e) => {
@@ -59,16 +56,16 @@ function Reports() {
     }
 
     //handleChange for Category Search Bar
-    // const handleChangeCategory = (e) => {
-    //     console.log(e.target.value)
-    //     setSearchCategoryTerm(e.target.value)
-    // }
+    const handleChangeCategory = (e) => {
+        console.log(e.target.value)
+        setSearchCategoryTerm(e.target.value)
+    }
 
     // filter for Category Dropdown Menu
     const handleFilter = (e) => {
         console.log(e.target.value)
         axios.get(`inventories/search/category?category=${e.target.value}`)
-            .then(res => console.log(res))
+            .then(res => setInventories(res.data))
             .catch(err => console.log(err))
     }
 
@@ -77,20 +74,18 @@ function Reports() {
     const handleZeroQty = () => {
         axios.get(`inventories/search/zeroquantity`)
             .then(res => setInventories(res.data))
-            .catch(err => console.log(err))
+            .catch(err => console.log(err)) 
     }
 
-    //filter for zero quantities
-    //NOTE: CREATE ALERT/WARNING FOR THIS ONE
-
+    //delete zero quantities
     const deleteZeroQty = () => {
         axios.delete(`inventories/delete/zero`)
-            .then(res => console.log("deleteZero:", res))
+            // .then(res => console.log("deleteZero:", res))
+            .then(res => alert(res.data))
             .catch(err => console.log(err))
+            getInventories()
     }
 
-
-    //NEED TO CONNECT SEARCH BAR BELOW TO MONGODB ROUTE FOR THIS
 
     return (
 
@@ -102,12 +97,12 @@ function Reports() {
                 />
                 <SearchBar
                     handleChangeTitle={handleChangeTitle}
-                    // handleChangeCategory={handleChangeCategory}
+                    handleChangeCategory={handleChangeCategory}
                     titleSearch={titleSearch}
-                // categorySearch={categorySearch}
+                    categorySearch={categorySearch}
                 />
-
-                <button className="zero-list" onClick={handleZeroQty}>Sort List by Zero Qty</button>
+                <button className="all-inventory" onClick={getInventories}>Get All Inventory</button>
+                <button className="zero-list" onClick={handleZeroQty}>Find all Zero Qty</button>
                 <button className="zero-delete" onClick={deleteZeroQty}>Delete All Zero Qty</button>
             </div>
 
@@ -115,6 +110,7 @@ function Reports() {
 
                 <thead>
                     <tr>
+                        <th>ID</th>
                         <th>Title</th>
                         <th>Condition</th>
                         <th>Price</th>
@@ -124,25 +120,25 @@ function Reports() {
                         <th>Category</th>
                     </tr>
                 </thead>
-
-                <tbody>
-
-                    {inventories.map((inventory, index) => {
+                                 
+                        <tbody>
+                        {inventories.map((inventory, index) => {
                         return (
                             <tr id={inventory._id} key={inventory._id} index={index}>
+                                <td>{inventory._id}</td>
                                 <td>{inventory.title}</td>
                                 <td>{inventory.condition}</td>
                                 <td>{inventory.price}</td>
                                 <td>{inventory.quantity}</td>
                                 <td>{inventory.location}</td>
-                                <td>{inventory.SKU}</td>
+                                <td>{inventory.sku}</td>
                                 <td>{inventory.category}</td>
                             </tr>
+                            
                         )
-                    }
-                    )}
-
-                </tbody>
+                 })}
+                        </tbody>
+           
 
             </table>
 

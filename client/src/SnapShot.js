@@ -1,44 +1,76 @@
-import React from "react"
-// import React, { useState, useEffect } from "react"
-// import axios from "axios"
+// import React from "react"
+import React, { useState, useEffect } from "react"
+import axios from "axios"
 
 
 
 function SnapShot() {
 
-    // const [totalNumber, setTotalNumber] = useState([])
+    const [totalListings, setTotalListings] = useState(0)
+   
+    const [totalValue, setTotalValue] = useState(0)
+    
+    const [categValue, setCategValue] = useState([])
 
-    // const getTotalItems = () => {
-    //     axios.get(`inventories/total/number`)
-    //         .then(res => console.log(res.data))
-    //         .catch(err => console.log(err))
-    // }
+    const getTotalItems= () => {
+        axios.get(`inventories/total/items`)
+            .then(res => setTotalListings(res.data[0].totalItems))
+            .catch(err => console.log(err))
+    }
 
-    // //useEffect
-    // useEffect(() => {
-    //     console.log("useEffect triggered")
-    //     getTotalItems()
-    // }, [])
+    useEffect(() => {
+        console.log("useEffect triggered")
+        getTotalItems()
+    }, [])
 
-    // const totalValue = () => {
+  
 
-    // }
+    const getTotalValue = () => {
+        axios.get(`inventories/total/value`)
+            .then(res => setTotalValue(res.data[0].totalprice))       
+            .catch(err => console.log(err))
+    }
 
-    // const totalValueByCategory = () => {
 
-    // }
+    useEffect(() => {
+        console.log("useEffect triggered")
+        getTotalValue()
+    }, [])
 
+
+    const getCategValue = () => {
+        axios.get(`inventories/total/valueByCategory`)
+            .then(res => setCategValue (res.data))
+            .catch(err => console.log(err))
+    }
+
+    useEffect(() => {
+        console.log("useEffect triggered")
+        getCategValue()
+    }, [])
+
+  
 
     return (
 
         <div>
 
-            <p>Look, I'm the SnapShot Summary!</p>
+            <h1>Look, I'm the SnapShot Summary!</h1>
 
-            {/* <h3>Total Number of Items in Inventory:  {totalNumber}</h3>
-            <h3>Total $ Value of Inventory: </h3>
-            <h4>$ Value by Category:</h4> */}
+            <h3>Number of Listings: {totalListings} </h3>
+            <h3>Listings Value: $ {totalValue}</h3>
 
+            <h3>Value By Category:</h3>
+            {categValue.map((category, index)=>{
+                return(
+                    <div>
+                        <h4>{category._id}:  $ {category.totalprice}</h4>
+                    </div>
+               
+                )
+
+            })
+        }
 
 
         </div>

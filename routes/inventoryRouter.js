@@ -80,7 +80,7 @@ inventoryRouter.delete("/:inventoryID", (req, res, next) => {
                 res.status(500)
                 return next(err)
             }
-            return res.status(200).send(`Successfully deleted inventory item ${deletedInventory.title} with SKU ${deletedInventory.SKU}`)
+            return res.status(200).send(`Successfully deleted inventory item ${deletedInventory.title} with SKU ${deletedInventory.sku}`)
         })
 })
 
@@ -110,18 +110,18 @@ inventoryRouter.get("/search/title", (req, res, next) => {
 //$elemMatch
 //.aggregate() + $match  [aggregate -- also maybe helpful for reports/summaries]
 
-// inventoryRouter.get("/search/category", (req, res, next) => {
-//     const { category } = req.query
-//     const pattern = new RegExp(category)
-//     Inventory.find({ category: { $regex: pattern, $options: "i" } },
-//         (err, categories) => {
-//             if (err) {
-//                 res.status(500)
-//                 return next(err)
-//             }
-//             return res.status(200).send(categories)
-//         })
-// })
+inventoryRouter.get("/search/category", (req, res, next) => {
+    const { category } = req.query
+    const pattern = new RegExp(category)
+    Inventory.find({ category: { $regex: pattern, $options: "i" } },
+        (err, categories) => {
+            if (err) {
+                res.status(500)
+                return next(err)
+            }
+            return res.status(200).send(categories)
+        })
+})
 
 //DIFFERENT WAY TO GET BY CATEGORY
 inventoryRouter.get("/search/category", (req, res, next) => {
@@ -235,18 +235,39 @@ inventoryRouter.delete("/delete/zero", (req, res, next) => {
         })
 })
 
+
+//NOT SURE WHY, BUT THIS ROUTE WOULD NOT WORK FOR ME
 // GET Request - Total number of items in the inventory 
-inventoryRouter.get("/total/number", (req, res, next) => {
-    Inventory.countDocuments({}, // counts the number of documents in the db
-        (err, totalNumberItems) => {
+// inventoryRouter.get("/total/number", (req, res, next) => {
+//     Inventory.countDocuments({}, // counts the number of documents in the db
+//         (err, totalNumberItems) => {
+//             if (err) {
+//                 res.status(500)
+//                 return next(err)
+//             }
+//             return res.status(200).send(totalNumberItems)
+//         }
+//     )
+// })
+
+
+//USED THIS AS ALTERNATE GET REQUEST FOR TOTAL # ITEMS IN INVENTORY INSTEAD:
+inventoryRouter.get("/total/items", (req, res, next)=>{
+    Inventory.aggregate([
+        { $match: {} },  // matches all the items in the db
+        { $count:  "totalItems" } // gives a sum of the total list itmes
+    ],
+        (err, itemTotal) => {
             if (err) {
                 res.status(500)
                 return next(err)
             }
-            return res.status(200).send(totalNumberItems)
+            return res.status(200).send(itemTotal)
         }
     )
-})
+        
+    })
+
 
 // GET Request - Total value of the inventory using aggregate()
 inventoryRouter.get("/total/value", (req, res, next) => {
