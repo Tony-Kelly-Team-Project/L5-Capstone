@@ -12,9 +12,12 @@ function DropDown(props) {
 
                 <select onChange={props.handleFilter} className="dropdown">
                     <option>--Select a Category--</option>
-                    <option value="apparel">Apparel</option>
+                    <option value="antiques">Antiques</option>
+                    <option value="books">Books</option>
                     <option value="clothing">Clothing</option>
-                    <option value="toys">Toys</option>
+                    <option value="computers">Computers</option>
+                    <option value="crafts">Crafts</option>
+
                 </select>
             </div>
         </div>

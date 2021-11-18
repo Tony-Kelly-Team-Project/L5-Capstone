@@ -7,9 +7,11 @@ import "./NavBar.css"
 function NavBar() {
     return (
         <nav>
-            <Link to="/">Home</Link>
-            <Link to="/inventory">Inventory</Link>
-            <Link to="/reports">Reports</Link>
+            <ul>
+            <li><a><Link to="/">Home</Link></a></li>
+            <li><a><Link to="/inventory">Inventory</Link></a></li>
+            <li><a><Link to="/reports">Reports</Link></a></li>
+            </ul>
         </nav>
     );
 }
