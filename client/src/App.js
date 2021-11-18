@@ -7,7 +7,7 @@ import Inventory from "./Inventory.js"
 import InventoryForm from "./InventoryForm.js"
 import Reports from "./Reports"
 import NavBar from "./NavBar"
-import "./index.css"
+// import "./index.css"
 import axios from 'axios' //change after merge I had pull in axios
 
 export default function App(props) {
@@ -76,9 +76,10 @@ export default function App(props) {
         <h5></h5>
         <InventoryForm
             submit={ addInventory }
-            btnText="Add Ebay item"
+            btnText="Add"
             />
-            <div className="app-container">
+            {/* <div className="app-container"> */}
+            <div>
           <table>
             <thead>
               <h5>eBay Inventory</h5>
@@ -111,7 +112,7 @@ export default function App(props) {
         </Route>
 
         <Route path="/reports">
-          {inventories.map((inventory, index) =>
+          {/* {inventories.map((inventory, index) =>
             <Reports
               {...inventory}
               key={inventory._id}
@@ -119,7 +120,7 @@ export default function App(props) {
               
             />
           )
-          }
+          } */}
           <Reports />
 
         </Route>
