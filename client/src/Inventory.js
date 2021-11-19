@@ -1,3 +1,4 @@
+
 import React, { useState } from "react"
 import InventoryForm from './InventoryForm.js'
 import "./Inventory.css"
@@ -63,6 +64,7 @@ function Inventory(props) {
 }
 
 export default Inventory;
+
 
 
 

@@ -138,24 +138,6 @@ inventoryRouter.get("/search/category", (req, res, next) => {
 
 
 
-//ATTEMPT AT COMBINING SEARCH BY TITLE, SEARCH BY CATEGORY -- but not working right now
-// inventoryRouter.get("/search", (req, res, next) => {
-//     const { userTyped } = req.query
-//     const pattern = new RegExp(userTyped)
-//     Inventory.find({
-//         $or: [
-//             { category: { $regex: pattern, $options: "i" } },
-//             { title: { $regex: pattern, $options: "i" } }
-//         ]
-//     },
-//         (err, categories) => {
-//             if (err) {
-//                 res.status(500)
-//                 return next(err)
-//             }
-//             return res.status(200).send(categories)
-//         })
-// })
 
 //SORT BY CATEGORY -- using find & sort -- but doesn't seem to work??
 // inventoryRouter.get("/list/sorted", (req, res, next) => {
@@ -199,7 +181,7 @@ inventoryRouter.delete("/deletezero", (req, res, next) => {
                 return next(err)
             }
             // return res.status(200).send(`Sucessfully deleted all items with zero quantity from the database`)
-            return res.status(200).send(`You have deleted ${deletedZeroStock.deletedCount} zero stock items from the database`)
+            return res.status(200).send(`You have just deleted ${deletedZeroStock.deletedCount} zero stock items from the database`)
         })
 })
 

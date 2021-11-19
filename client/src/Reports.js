@@ -5,9 +5,7 @@ import SearchBar from "./SearchBar"
 import DropDown from "./DropDown"
 import "./Reports.css"
 
-//NOTE:  maybe use Bootstrap to help construct the inventory table??
-//FORMATTING:  look at "react-table" library to help construct format; look at Material UI for tables
-//Look at Data Tables in mongoDB also
+//NOTE:  maybe use Bootstrap to help construct the inventory table into card format
 
 function Reports() {
 
@@ -40,6 +38,7 @@ function Reports() {
 
     }
 
+    //Category SEARCH BAR
     const categorySearch = () => {
         console.log("searchCategoryTerm:", searchCategoryTerm)
 
@@ -80,7 +79,6 @@ function Reports() {
     //delete zero quantities
     const deleteZeroQty = () => {
         axios.delete(`inventories/delete/zero`)
-            // .then(res => console.log("deleteZero:", res))
             .then(res => alert(res.data))
             .catch(err => console.log(err))
             getInventories()
