@@ -1,24 +1,37 @@
 input {
-    width:  300px;
+    width:  200px;
     font-style: italic;
     border: 3px solid royalblue;
     border-radius: 8px;
     margin-top: 30px;
+    margin-left: 5px;
     padding: 8px;
 }
 
-.title-searchbar {
-    display: flex;
-}
 
 .search-title-btn {
     width: 125px;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding-top: 8px;
+    padding-bottom: 8px;
 }
 
 .search-category-btn {
     width: 125px;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+
+.search-bars-group {
+    display: flex;
+    /* flex-direction: column; */
+
+}
+
+.title-search-bar {
+    display: flex;
+}
+
+.category-search-bar {
+    display: flex;
 }
