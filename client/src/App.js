@@ -73,7 +73,6 @@ export default function App(props) {
         </Route>
 
         <Route path="/inventory">
-        <h5></h5>
         <InventoryForm
             submit={ addInventory }
             btnText="Add Ebay item"
@@ -111,15 +110,7 @@ export default function App(props) {
         </Route>
 
         <Route path="/reports">
-          {inventories.map((inventory, index) =>
-            <Reports
-              {...inventory}
-              key={inventory._id}
-              index={index}
               
-            />
-          )
-          }
           <Reports />
 
         </Route>
@@ -130,4 +121,3 @@ export default function App(props) {
   );
 }
 
-// export default App;

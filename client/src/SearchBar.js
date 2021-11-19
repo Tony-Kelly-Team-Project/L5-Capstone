@@ -3,7 +3,6 @@ import "./SearchBar.css"
 
 
 
-//need button to submit search???
 
 function SearchBar(props) {
     console.log("searchbar props.titleSearch", props.titleSearch)

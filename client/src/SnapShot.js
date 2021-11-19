@@ -37,11 +37,24 @@ function SnapShot() {
         getTotalValue()
     }, [])
 
+    
+    
+    //Currency Format for SnapShot.js
+    //from:  https://newbedev.com/how-do-you-format-a-number-to-currency-when-using-react-native-expo
+    //other link:  https://blog.abelotech.com/posts/number-currency-formatting-javascript/
+   const currencyFormat = (num)=> {
+        return '$' + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')  
+    }
 
+
+    //Need to figure out how to filter out zero quantities from this total value--write it into the route?
     const getCategValue = () => {
         axios.get(`inventories/total/valueByCategory`)
-            .then(res => setCategValue (res.data))
+            .then(
+                res => setCategValue (res.data))
+            
             .catch(err => console.log(err))
+          
     }
 
     useEffect(() => {
@@ -49,22 +62,21 @@ function SnapShot() {
         getCategValue()
     }, [])
 
-  
+
+
 
     return (
 
         <div>
 
-            <h1>Look, I'm the SnapShot Summary!</h1>
-
             <h3>Number of Listings: {totalListings} </h3>
-            <h3>Listings Value: $ {totalValue}</h3>
+            <h3>Listings Value: $ {currencyFormat(totalValue)}</h3>
 
             <h3>Value By Category:</h3>
             {categValue.map((category, index)=>{
                 return(
                     <div>
-                        <h4>{category._id}:  $ {category.totalprice}</h4>
+                        <h4>{category._id}:  $ {currencyFormat(category.totalprice)}</h4>
                     </div>
                
                 )
