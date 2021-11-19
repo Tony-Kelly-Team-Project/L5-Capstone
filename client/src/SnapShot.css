@@ -59,6 +59,13 @@ td, th {
     border-radius: 15px;
 }
 
+.snapshot-title {
+    font-size:  22px;
+    font-weight: bold;
+    margin-bottom:  15px;
+    margin-top: -20px;
+}
+
 
 
 

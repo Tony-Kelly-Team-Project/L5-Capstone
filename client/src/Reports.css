@@ -48,6 +48,14 @@ button {
     font-weight: bold;
 }
 
+.inv-id {
+    width:  14%;
+}
+
+.inv-price-quant {
+    width:  5%;
+    text-align: right;
+}
 
 .inv-price {
     text-align: right;

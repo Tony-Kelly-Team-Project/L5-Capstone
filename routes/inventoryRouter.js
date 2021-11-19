@@ -188,9 +188,10 @@ inventoryRouter.delete("/deletezero", (req, res, next) => {
 
 
 //RETURNS AGGREGATED TOTAL VALUE BY CATEGORY in alphabetical order:
+//add filter to get rid of zero quantities???
 inventoryRouter.get("/total/valueByCategory", (req, res, next) => {
     Inventory.aggregate([
-        { $match: {} },
+        { $match: {quantity: {$gt: 0}} },
         { $group: { _id: "$category", totalprice: { $sum: "$price" } }}, 
         { $sort: { category: 1}}
 
