@@ -1,6 +1,7 @@
 // import React from "react"
 import React, { useState, useEffect } from "react"
 import axios from "axios"
+import "./SnapShot.css"
 
 
 
@@ -67,16 +68,30 @@ function SnapShot() {
 
     return (
 
-        <div>
+        <div className="snapshot-table">
+      
+        <div className="summary-table">
+                <tr classname="tot-list">
+            
+                        <th>Total Number of Listings:</th>
+                        <td className="tot-listings-num">  {totalListings} </td>
+                </tr>
+                <tr className="tot-value">
+                        <th >Total Listings Value: </th>
+                        <td className="tot-value-num">{currencyFormat(totalValue)}</td>
+ 
+                </tr>
 
-            <h3>Number of Listings: {totalListings} </h3>
-            <h3>Listings Value: $ {currencyFormat(totalValue)}</h3>
 
-            <h3>Value By Category:</h3>
+            <h5 className="val-categ-title">Value By Category:</h5>
             {categValue.map((category, index)=>{
                 return(
+                    
                     <div>
-                        <h4>{category._id}:  $ {currencyFormat(category.totalprice)}</h4>
+                        <tr>
+                        <th>{category._id}: </th>  
+                        <td className="category-values"> {currencyFormat(category.totalprice)}</td>
+                        </tr>
                     </div>
                
                 )
@@ -84,7 +99,7 @@ function SnapShot() {
             })
         }
 
-
+</div>
         </div>
     );
 }
