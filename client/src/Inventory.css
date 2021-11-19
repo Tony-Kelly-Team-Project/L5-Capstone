@@ -1,2 +1,11 @@
 
-  
+.inventoryButton {
+    width:  100px;
+    margin-top: 3px;
+    margin-left: 3px;
+    padding: 1px;
+    border-radius:  8px;
+    background-color: lightskyblue;
+    font-weight: bold;
+}
+
