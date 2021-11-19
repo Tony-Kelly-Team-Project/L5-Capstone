@@ -1,6 +1,7 @@
-h5 {
-    margin-top: 30px;
+.dropdown-title {
+    margin-top: 25px;
     margin-bottom: 2px;
+    font-weight: bold;
 }
 
 .dropdown-menu {

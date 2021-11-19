@@ -99,16 +99,18 @@ function Reports() {
                     titleSearch={titleSearch}
                     categorySearch={categorySearch}
                 />
-                <button className="all-inventory" onClick={getInventories}>Get All Inventory</button>
-                <button className="zero-list" onClick={handleZeroQty}>Find all Zero Qty</button>
-                <button className="zero-delete" onClick={deleteZeroQty}>Delete All Zero Qty</button>
+                <div className="buttons-group">
+                    <button className="all-inventory-btn" onClick={getInventories}>Get All Inventory</button>
+                    <button className="zero-list-btn" onClick={handleZeroQty}>Find all Zero Qty</button>
+                    <button className="zero-delete-btn" onClick={deleteZeroQty}>Delete All Zero Qty</button>
+                </div>
             </div>
 
             <table>
 
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th className="inv-id">ID</th>
                         <th>Title</th>
                         <th>Condition</th>
                         <th>Price</th>
@@ -126,8 +128,8 @@ function Reports() {
                                 <td>{inventory._id}</td>
                                 <td>{inventory.title}</td>
                                 <td>{inventory.condition}</td>
-                                <td>{inventory.price}</td>
-                                <td>{inventory.quantity}</td>
+                                <td className="inv-price">{inventory.price}</td>
+                                <td className="inv-quant">{inventory.quantity}</td>
                                 <td>{inventory.location}</td>
                                 <td>{inventory.sku}</td>
                                 <td>{inventory.category}</td>

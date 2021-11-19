@@ -187,11 +187,13 @@ inventoryRouter.delete("/deletezero", (req, res, next) => {
 
 
 
-//RETURNS AGGREGATED TOTAL VALUE BY CATEGORY:
+//RETURNS AGGREGATED TOTAL VALUE BY CATEGORY in alphabetical order:
 inventoryRouter.get("/total/valueByCategory", (req, res, next) => {
     Inventory.aggregate([
         { $match: {} },
-        { $group: { _id: "$category", totalprice: { $sum: "$price" } } }
+        { $group: { _id: "$category", totalprice: { $sum: "$price" } }}, 
+        { $sort: { category: 1}}
+
     ],
         (err, priceTotal) => {
             if (err) {

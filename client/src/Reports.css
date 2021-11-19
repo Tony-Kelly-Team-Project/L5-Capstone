@@ -23,23 +23,56 @@ th {
 th, td {
     text-align: left;
     font-size: 14px;
-    
 }
+
 
 .options-bar {
     display: flex;
     justify-content: flex-start;
-    margin-left:  2%;
+    margin-left:  5.1%;
+    margin-right: 5.1%;
+    margin-bottom:  30px;
+    background-color: lightgrey;
+    padding-bottom:  18px;
+    padding-left: 15px;
+    border-radius:  10px;
 }
 
 button {
-    width:  125px;
+    width:  130px;
     margin-top: 5px;
     margin-left: 5px;
     padding: 1px;
     border-radius:  8px;
     background-color: lightskyblue;
     font-weight: bold;
+}
+
+
+.inv-price {
+    text-align: right;
+}
+
+.inv-quant {
+    text-align: right;
+}
+
+.all-inventory-btn {
+    height: 36px;
+}
+
+.zero-list-btn {
+ height: 36px;
+}
+
+.zero-delete-btn {
+ height: 36px;
+}
+
+.buttons-group {
+    margin-top: 26px;
+    margin-left: 55px;
+    padding-left: 2px;
 }
 
 

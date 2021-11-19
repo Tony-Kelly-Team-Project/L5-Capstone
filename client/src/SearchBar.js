@@ -8,7 +8,7 @@ function SearchBar(props) {
     console.log("searchbar props.titleSearch", props.titleSearch)
 
     return (
-        <div>
+        <div className="search-bars-group">
             <div className="title-searchbar">
                 <input
                     type="search"
