@@ -84,6 +84,12 @@ function Reports() {
             getInventories()
     }
 
+    //format currency
+       const currencyFormat = (num)=> {
+        return '$' + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')  
+    }
+
+
 
     return (
 
@@ -107,17 +113,21 @@ function Reports() {
             </div>
 
             <table>
+                <colgroup>
+                    <col span="1" className="inv-id"></col>
+                </colgroup>
 
+             
                 <thead>
                     <tr>
-                        <th className="inv-id">ID</th>
+                        <th>ID</th>
+                        <th>Category</th>
                         <th>Title</th>
                         <th>Condition</th>
+                        <th>SKU</th>
                         <th>Price</th>
                         <th>Quantity</th>
                         <th>Location</th>
-                        <th>SKU</th>
-                        <th>Category</th>
                     </tr>
                 </thead>
                                  
@@ -125,14 +135,14 @@ function Reports() {
                         {inventories.map((inventory, index) => {
                         return (
                             <tr id={inventory._id} key={inventory._id} index={index}>
-                                <td>{inventory._id}</td>
+                                <td className="inv-id">{inventory._id}</td>
+                                <td>{inventory.category}</td>
                                 <td>{inventory.title}</td>
                                 <td>{inventory.condition}</td>
-                                <td className="inv-price">{inventory.price}</td>
-                                <td className="inv-quant">{inventory.quantity}</td>
-                                <td>{inventory.location}</td>
                                 <td>{inventory.sku}</td>
-                                <td>{inventory.category}</td>
+                                <td className="inv-price-quant">{currencyFormat(inventory.price)}</td>
+                                <td className="inv-price-quant">{inventory.quantity}</td>
+                                <td>{inventory.location}</td>
                             </tr>
                             
                         )

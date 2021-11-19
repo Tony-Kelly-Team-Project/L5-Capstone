@@ -69,10 +69,11 @@ function SnapShot() {
     return (
 
         <div className="snapshot-table">
+ 
       
         <div className="summary-table">
                 <tr classname="tot-list">
-            
+                        <h5 className="snapshot-title">eBay Inventory Snapshot</h5>
                         <th>Total Number of Listings:</th>
                         <td className="tot-listings-num">  {totalListings} </td>
                 </tr>
