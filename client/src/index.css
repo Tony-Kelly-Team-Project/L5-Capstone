@@ -1,12 +1,14 @@
 .pageStyle {
     background-color: #ECECEC;
     height: 100vh;
+    
 }
 
 .app-container {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    padding: 1rem;
     
   }
   
@@ -15,28 +17,32 @@
     width: 90%;
     margin-left:auto; 
     margin-right:auto;
-
+    
+  
   }
   
   th,
   td {
     border: 1px solid #ffffff;
     text-align: left;
-    padding: 8px;
+    padding: 4px;
     font-size: 14px;
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-    columns: 190px;
+    
+   
   }
   
   th {
-    /* background-color: #ECECEC; */
     background-color: #F78888;
+   
   }
   
   td {
     background-color: #F8E9A1;
-    /* background-color: rgb(205, 235, 253); */
+    
+    
   }
+
 
   form {
     display: flex;
@@ -57,7 +63,7 @@
   form td:last-child {
     display: flex;
     justify-content: space-evenly;
-    columns: 190px;
+    columns: 175px;
     
   }
   
@@ -73,3 +79,5 @@
     font-weight: lighter;
     margin-top: 20px;
   }
+
+  

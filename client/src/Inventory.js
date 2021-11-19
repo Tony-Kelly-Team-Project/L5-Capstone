@@ -24,10 +24,12 @@ function Inventory(props) {
                         <td>{category}</td>
                         <td>
                             <button
+                                classname = "inventoryButton"
                                 onClick={() => props.deleteInventory(_id)}>
                                 Delete
                             </button>
                             <button
+                                classname = "inventoryButton"
                                 onClick={() => setEditToggle(prevToggle => !prevToggle)}>
                                 Edit
                             </button>
